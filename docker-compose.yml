@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+
+    nginx:
+        image: kayy256/nginx:latest
+        container_name: websrv
+        restart: 'always'
+        ports:
+            - '80:80'
+            - '443:443'
+        volumes:
+            - ./app:/var/www/html
+            - ./config/nginx/conf.d:/etc/nginx/conf.d
+            - ./certbot/conf:/etc/nginx/ssl
+            - ./certbot/data:/var/www/certbot
+
+    certbot: 
+        image: kayy256/certbot:latest
+        container_name: certbot_for_websrv
+        command: certonly --webroot --webroot-path=/var/www/certbot --email vyacheslav25sl@gmail.com --agree-tos --no-eff-email -d arhproject.h1n.ru -d www.arhproject.h1n.ru
+        volumes:
+            - ./certbot/conf:/etc/letsencrypt
+            - ./certbot/logs:/var/log/letsencrypt
+            - ./certbot/data:/var/www/certbot

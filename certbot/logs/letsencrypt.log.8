@@ -1,0 +1,540 @@
+2021-02-05 12:26:36,760:DEBUG:certbot._internal.main:certbot version: 1.12.0
+2021-02-05 12:26:36,761:DEBUG:certbot._internal.main:Location of certbot entry point: /usr/local/bin/certbot
+2021-02-05 12:26:36,761:DEBUG:certbot._internal.main:Arguments: ['--webroot', '--webroot-path=/var/www/certbot', '--email', 'your-email@domain.com', '--agree-tos', '--no-eff-email', '-d', 'domain.com', '-d', 'www.domain.com']
+2021-02-05 12:26:36,762:DEBUG:certbot._internal.main:Discovered plugins: PluginsRegistry(PluginEntryPoint#manual,PluginEntryPoint#null,PluginEntryPoint#standalone,PluginEntryPoint#webroot)
+2021-02-05 12:26:36,838:DEBUG:certbot._internal.log:Root logging level set at 20
+2021-02-05 12:26:36,839:INFO:certbot._internal.log:Saving debug log to /var/log/letsencrypt/letsencrypt.log
+2021-02-05 12:26:36,842:DEBUG:certbot._internal.plugins.selection:Requested authenticator webroot and installer None
+2021-02-05 12:26:36,858:DEBUG:certbot._internal.plugins.selection:Single candidate plugin: * webroot
+Description: Place files in webroot directory
+Interfaces: IAuthenticator, IPlugin
+Entry point: webroot = certbot._internal.plugins.webroot:Authenticator
+Initialized: <certbot._internal.plugins.webroot.Authenticator object at 0x7f1b31f73340>
+Prep: True
+2021-02-05 12:26:36,860:DEBUG:certbot._internal.plugins.selection:Selected authenticator <certbot._internal.plugins.webroot.Authenticator object at 0x7f1b31f73340> and installer None
+2021-02-05 12:26:36,860:INFO:certbot._internal.plugins.selection:Plugins selected: Authenticator webroot, Installer None
+2021-02-05 12:26:37,337:DEBUG:acme.client:Sending GET request to https://acme-v02.api.letsencrypt.org/directory.
+2021-02-05 12:26:37,343:DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): acme-v02.api.letsencrypt.org:443
+2021-02-05 12:26:38,166:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "GET /directory HTTP/1.1" 200 658
+2021-02-05 12:26:38,171:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Fri, 05 Feb 2021 12:26:38 GMT
+Content-Type: application/json
+Content-Length: 658
+Connection: keep-alive
+Cache-Control: public, max-age=0, no-cache
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "keyChange": "https://acme-v02.api.letsencrypt.org/acme/key-change",
+  "meta": {
+    "caaIdentities": [
+      "letsencrypt.org"
+    ],
+    "termsOfService": "https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf",
+    "website": "https://letsencrypt.org"
+  },
+  "newAccount": "https://acme-v02.api.letsencrypt.org/acme/new-acct",
+  "newNonce": "https://acme-v02.api.letsencrypt.org/acme/new-nonce",
+  "newOrder": "https://acme-v02.api.letsencrypt.org/acme/new-order",
+  "revokeCert": "https://acme-v02.api.letsencrypt.org/acme/revoke-cert",
+  "xGF17J8eaho": "https://community.letsencrypt.org/t/adding-random-entries-to-the-directory/33417"
+}
+2021-02-05 12:26:38,172:DEBUG:acme.client:Requesting fresh nonce
+2021-02-05 12:26:38,173:DEBUG:acme.client:Sending HEAD request to https://acme-v02.api.letsencrypt.org/acme/new-nonce.
+2021-02-05 12:26:38,361:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "HEAD /acme/new-nonce HTTP/1.1" 200 0
+2021-02-05 12:26:38,363:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Fri, 05 Feb 2021 12:26:38 GMT
+Connection: keep-alive
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index"
+Replay-Nonce: 0103OuSMFlvbzeyPW0ixbJjc7Hyb8Egjc_XYPQuHXDWv6ko
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+
+2021-02-05 12:26:38,364:DEBUG:acme.client:Storing nonce: 0103OuSMFlvbzeyPW0ixbJjc7Hyb8Egjc_XYPQuHXDWv6ko
+2021-02-05 12:26:38,365:DEBUG:acme.client:JWS payload:
+b'{\n  "contact": [\n    "mailto:your-email@domain.com"\n  ],\n  "termsOfServiceAgreed": true\n}'
+2021-02-05 12:26:38,385:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/new-acct:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAiandrIjogeyJuIjogInJWMkhqc3VYNi1tRERRUTRWcl9vMW9vSm1lck56YXR1MzZsbTlLMDdrOGpTRmFqaFlxcmR2Y2R4TGFqUjQxT1pjdjgxSXExc1JuakFWMWJyNVp1ZWw1YnZZNXJvUkVNak5LVTVlbXRIbThQZmxBNWI4SWZqeldDRXJfQ1pyMXFqbTJoWkdPUldCLWhMdXdELXpWM01xQkhsaVhPS3ZmQXVvVVQ1V1JZdFlhYnRWb3FtSUdsWTRRT3I5N3c3QjhYeXN6MWJqLUphaU9xZVpEOW5MaVlGRkZkb1VsQm1VamRlQkQzbTZWR1JMd2dyMWsxeWRONjJEc1N0T045WlJRTXcxSmprTWNkWW5QX3NUYm9ibEhWVlJsNkNjei1DTlpKUG5HQ0FSZ1BFX2tWcmhlZ3I3SW5VVVpYRk5YMWJwMzh3cUlJNFhnZEwzbDZCYUgwRTJoNXhpdyIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSJ9LCAibm9uY2UiOiAiMDEwM091U01GbHZiemV5UFcwaXhiSmpjN0h5YjhFZ2pjX1hZUFF1SFhEV3Y2a28iLCAidXJsIjogImh0dHBzOi8vYWNtZS12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL25ldy1hY2N0In0",
+  "signature": "icxfG8ogYczw1wuPXO7DNmDeuwHrf7Q7q6qBcnu_OTE_i9_6UIOrdlfp1Av9YoaKtFcQJvvdjTzrZpD_55JTgWlZ1A6ihks4eJMOaM7Wn1gMnnf1-G6N4vfxCDfLfo5N7M-d0JwfmE88QY-VFkLgkb_xRKSBV6X3ovJaWfMI6FZv5RaE_TfIJkGS-yK6Tsx-5sIfjfuywgh7uLsj4V4FTDOKlsrp7lCD7kIpAmNDibuY8f79bqouxRYAOgGCfRfjW3HfkkaPOyRs27rVkj76W4whUAQaIofbnoN3D11MpaUW7_s1pMVjk_EM8gZRHh3UYttLCJmy3i_hlNbhvY6XxA",
+  "payload": "ewogICJjb250YWN0IjogWwogICAgIm1haWx0bzp5b3VyLWVtYWlsQGRvbWFpbi5jb20iCiAgXSwKICAidGVybXNPZlNlcnZpY2VBZ3JlZWQiOiB0cnVlCn0"
+}
+2021-02-05 12:26:38,593:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/new-acct HTTP/1.1" 201 564
+2021-02-05 12:26:38,596:DEBUG:acme.client:Received response:
+HTTP 201
+Server: nginx
+Date: Fri, 05 Feb 2021 12:26:38 GMT
+Content-Type: application/json
+Content-Length: 564
+Connection: keep-alive
+Boulder-Requester: 111767649
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index", <https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf>;rel="terms-of-service"
+Location: https://acme-v02.api.letsencrypt.org/acme/acct/111767649
+Replay-Nonce: 0103ztOiKhYefEVjKXSgWJDwOjAGG5GJq8BCyxP1dc3IiwI
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "key": {
+    "kty": "RSA",
+    "n": "rV2HjsuX6-mDDQQ4Vr_o1ooJmerNzatu36lm9K07k8jSFajhYqrdvcdxLajR41OZcv81Iq1sRnjAV1br5Zuel5bvY5roREMjNKU5emtHm8PflA5b8IfjzWCEr_CZr1qjm2hZGORWB-hLuwD-zV3MqBHliXOKvfAuoUT5WRYtYabtVoqmIGlY4QOr97w7B8Xysz1bj-JaiOqeZD9nLiYFFFdoUlBmUjdeBD3m6VGRLwgr1k1ydN62DsStON9ZRQMw1JjkMcdYnP_sTboblHVVRl6Ccz-CNZJPnGCARgPE_kVrhegr7InUUZXFNX1bp38wqII4XgdL3l6BaH0E2h5xiw",
+    "e": "AQAB"
+  },
+  "contact": [
+    "mailto:your-email@domain.com"
+  ],
+  "initialIp": "178.18.38.230",
+  "createdAt": "2021-02-05T12:26:38.493270026Z",
+  "status": "valid"
+}
+2021-02-05 12:26:38,597:DEBUG:acme.client:Storing nonce: 0103ztOiKhYefEVjKXSgWJDwOjAGG5GJq8BCyxP1dc3IiwI
+2021-02-05 12:26:38,611:DEBUG:certbot.display.util:Notifying user: Account registered.
+2021-02-05 12:26:38,611:DEBUG:certbot._internal.main:Picked account: <Account(RegistrationResource(body=Registration(key=JWKRSA(key=<ComparableRSAKey(<cryptography.hazmat.backends.openssl.rsa._RSAPublicKey object at 0x7f1b31f7cb80>)>), contact=('mailto:your-email@domain.com',), agreement=None, status='valid', terms_of_service_agreed=None, only_return_existing=None, external_account_binding=None), uri='https://acme-v02.api.letsencrypt.org/acme/acct/111767649', new_authzr_uri=None, terms_of_service='https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf'), 846def15d2378286355ee83a0a8c57ad, Meta(creation_dt=datetime.datetime(2021, 2, 5, 12, 26, 38, tzinfo=<UTC>), creation_host='fddfa398e1cf', register_to_eff=None))>
+2021-02-05 12:26:38,615:DEBUG:certbot.display.util:Notifying user: Requesting a certificate for domain.com and www.domain.com
+2021-02-05 12:26:39,464:DEBUG:certbot.crypto_util:Generating RSA key (2048 bits): /etc/letsencrypt/keys/0000_key-certbot.pem
+2021-02-05 12:26:39,476:DEBUG:certbot.crypto_util:Creating CSR: /etc/letsencrypt/csr/0000_csr-certbot.pem
+2021-02-05 12:26:39,479:DEBUG:acme.client:JWS payload:
+b'{\n  "identifiers": [\n    {\n      "type": "dns",\n      "value": "domain.com"\n    },\n    {\n      "type": "dns",\n      "value": "www.domain.com"\n    }\n  ]\n}'
+2021-02-05 12:26:39,488:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/new-order:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImh0dHBzOi8vYWNtZS12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvMTExNzY3NjQ5IiwgIm5vbmNlIjogIjAxMDN6dE9pS2hZZWZFVmpLWFNnV0pEd09qQUdHNUdKcThCQ3l4UDFkYzNJaXdJIiwgInVybCI6ICJodHRwczovL2FjbWUtdjAyLmFwaS5sZXRzZW5jcnlwdC5vcmcvYWNtZS9uZXctb3JkZXIifQ",
+  "signature": "dHw_O1cUzdI-AnE0AJmfoej2CmMCDUkx1Yg_SWPrngsbXrSpJ6AaQuhDyZ0DWzYQWcxBoOImO_fZKLWiWphSNuyV6erqGjtgR1lDNNN6YcZ-6kJxmWNjdCSHHLZrcDn3oRYjUwI6zmYkGZvC9iyl6fUUrNle2-Hl1t73ew1nbwwLq_goRpewqfyM3gswhb0E6i9tCmHC9DEca99LhBGZthbHiHl2CgZQ1hI17gsvNbP8lR2WYYfYBlb5Gsam5BOmr54teY_P7MvMcnum3tvERwECxdPOcHgdCVU3f7s2L3-kJcsoFuWX2_Z9lXOyilQqxLonS3NANWP4quBworAAEw",
+  "payload": "ewogICJpZGVudGlmaWVycyI6IFsKICAgIHsKICAgICAgInR5cGUiOiAiZG5zIiwKICAgICAgInZhbHVlIjogImRvbWFpbi5jb20iCiAgICB9LAogICAgewogICAgICAidHlwZSI6ICJkbnMiLAogICAgICAidmFsdWUiOiAid3d3LmRvbWFpbi5jb20iCiAgICB9CiAgXQp9"
+}
+2021-02-05 12:26:39,710:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/new-order HTTP/1.1" 201 468
+2021-02-05 12:26:39,712:DEBUG:acme.client:Received response:
+HTTP 201
+Server: nginx
+Date: Fri, 05 Feb 2021 12:26:39 GMT
+Content-Type: application/json
+Content-Length: 468
+Connection: keep-alive
+Boulder-Requester: 111767649
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index"
+Location: https://acme-v02.api.letsencrypt.org/acme/order/111767649/7727634347
+Replay-Nonce: 0103akTfKLqUM4-oRE5WGWXAP7Dj-ewtPoLO_bE-klvcQaQ
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "status": "pending",
+  "expires": "2021-02-12T12:26:39Z",
+  "identifiers": [
+    {
+      "type": "dns",
+      "value": "domain.com"
+    },
+    {
+      "type": "dns",
+      "value": "www.domain.com"
+    }
+  ],
+  "authorizations": [
+    "https://acme-v02.api.letsencrypt.org/acme/authz-v3/10625969820",
+    "https://acme-v02.api.letsencrypt.org/acme/authz-v3/10625969822"
+  ],
+  "finalize": "https://acme-v02.api.letsencrypt.org/acme/finalize/111767649/7727634347"
+}
+2021-02-05 12:26:39,713:DEBUG:acme.client:Storing nonce: 0103akTfKLqUM4-oRE5WGWXAP7Dj-ewtPoLO_bE-klvcQaQ
+2021-02-05 12:26:39,722:DEBUG:acme.client:JWS payload:
+b''
+2021-02-05 12:26:39,735:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/authz-v3/10625969820:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImh0dHBzOi8vYWNtZS12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvMTExNzY3NjQ5IiwgIm5vbmNlIjogIjAxMDNha1RmS0xxVU00LW9SRTVXR1dYQVA3RGotZXd0UG9MT19iRS1rbHZjUWFRIiwgInVybCI6ICJodHRwczovL2FjbWUtdjAyLmFwaS5sZXRzZW5jcnlwdC5vcmcvYWNtZS9hdXRoei12My8xMDYyNTk2OTgyMCJ9",
+  "signature": "JyWgaZ2H-xQTW8w7LD7J9RGQfs2cNFDP8LKJEPcx0g7BknbwpQbdma50x1XAINzjZZb04hzFQMYIifHQIPBbtiaZEeUlHFwYnjORDhKcVWOYGL5aInOmdugNu6hXGdgxCp3J4ifS4SbzcMFi1X4WUG8HlGW8LY77aF-VzWj7zty6j59QTps8ktFb5QMxZhvcZMZRJ-hJhOua1NvyJFozNk3qgfk657oDEG5_5MeE7AH-pJgtCHNI9yiMTqU3kUD8vxwFx7f61pQ4KfFP8HATNVV-AbmNXY__GaALjb3FKjg2x_hnLDFl3GkSRBr-BPNkwMVeNv6UnqnpvIAlVjxxXw",
+  "payload": ""
+}
+2021-02-05 12:26:39,963:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/authz-v3/10625969820 HTTP/1.1" 200 791
+2021-02-05 12:26:39,965:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Fri, 05 Feb 2021 12:26:39 GMT
+Content-Type: application/json
+Content-Length: 791
+Connection: keep-alive
+Boulder-Requester: 111767649
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index"
+Replay-Nonce: 01041zxGniXZx_2pcb-XUvGROw5eUPZw8zYRbDfbVLbGh8o
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "identifier": {
+    "type": "dns",
+    "value": "domain.com"
+  },
+  "status": "pending",
+  "expires": "2021-02-12T12:26:39Z",
+  "challenges": [
+    {
+      "type": "http-01",
+      "status": "pending",
+      "url": "https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969820/y69PgA",
+      "token": "RIRqS5ZCyrDEEhjbx7OfpLyFJ4o9y5lkl8--0KFE2Bc"
+    },
+    {
+      "type": "dns-01",
+      "status": "pending",
+      "url": "https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969820/0n2lbA",
+      "token": "RIRqS5ZCyrDEEhjbx7OfpLyFJ4o9y5lkl8--0KFE2Bc"
+    },
+    {
+      "type": "tls-alpn-01",
+      "status": "pending",
+      "url": "https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969820/8SsWlg",
+      "token": "RIRqS5ZCyrDEEhjbx7OfpLyFJ4o9y5lkl8--0KFE2Bc"
+    }
+  ]
+}
+2021-02-05 12:26:39,966:DEBUG:acme.client:Storing nonce: 01041zxGniXZx_2pcb-XUvGROw5eUPZw8zYRbDfbVLbGh8o
+2021-02-05 12:26:39,968:DEBUG:acme.client:JWS payload:
+b''
+2021-02-05 12:26:39,978:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/authz-v3/10625969822:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImh0dHBzOi8vYWNtZS12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvMTExNzY3NjQ5IiwgIm5vbmNlIjogIjAxMDQxenhHbmlYWnhfMnBjYi1YVXZHUk93NWVVUFp3OHpZUmJEZmJWTGJHaDhvIiwgInVybCI6ICJodHRwczovL2FjbWUtdjAyLmFwaS5sZXRzZW5jcnlwdC5vcmcvYWNtZS9hdXRoei12My8xMDYyNTk2OTgyMiJ9",
+  "signature": "HCVKPDe2WMABe0hwLK3wYyTgcm44RWVN5CH3gIv5aM-9GjlwTi3hpxwP1DfJ3JKHCxjenZ9XjDcDLNrxlLDg6t6ygr2zo7bXQH8d4F6FTxLpZjiGc_3ICkwM7rxnMjcMSMogAWlduVTvMGaDr158xyQ_8N2PfAA1UxJIL9NgQgE0z-YCAdbQKM47ohKYTrT87dxMsweLXzAYpXSRH1elPhdL5Nes7Zf4EwnuAmwyLZFMFDdR2I3NOuZ1htGcrXmph9OrAYphGm4jhEBdraP0xMNsjGVeYUd-Rrn4mvZFQOfPY9M-bv8YnpLQt2eNgogZtPatue4zxUCCB8ZyPr4ibQ",
+  "payload": ""
+}
+2021-02-05 12:26:40,185:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/authz-v3/10625969822 HTTP/1.1" 200 795
+2021-02-05 12:26:40,189:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Fri, 05 Feb 2021 12:26:40 GMT
+Content-Type: application/json
+Content-Length: 795
+Connection: keep-alive
+Boulder-Requester: 111767649
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index"
+Replay-Nonce: 0104DnmO1RJMVlnUvKcnlLsLi5mzUYtlweg10-wkHif9cIo
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "identifier": {
+    "type": "dns",
+    "value": "www.domain.com"
+  },
+  "status": "pending",
+  "expires": "2021-02-12T12:26:39Z",
+  "challenges": [
+    {
+      "type": "http-01",
+      "status": "pending",
+      "url": "https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969822/iGc0qA",
+      "token": "JrRtfC5flcZ1q1Ch5mKIgAsFfImOxvruZBFApie6JfA"
+    },
+    {
+      "type": "dns-01",
+      "status": "pending",
+      "url": "https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969822/yND6Eg",
+      "token": "JrRtfC5flcZ1q1Ch5mKIgAsFfImOxvruZBFApie6JfA"
+    },
+    {
+      "type": "tls-alpn-01",
+      "status": "pending",
+      "url": "https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969822/QBALog",
+      "token": "JrRtfC5flcZ1q1Ch5mKIgAsFfImOxvruZBFApie6JfA"
+    }
+  ]
+}
+2021-02-05 12:26:40,190:DEBUG:acme.client:Storing nonce: 0104DnmO1RJMVlnUvKcnlLsLi5mzUYtlweg10-wkHif9cIo
+2021-02-05 12:26:40,193:INFO:certbot._internal.auth_handler:Performing the following challenges:
+2021-02-05 12:26:40,193:INFO:certbot._internal.auth_handler:http-01 challenge for domain.com
+2021-02-05 12:26:40,194:INFO:certbot._internal.auth_handler:http-01 challenge for www.domain.com
+2021-02-05 12:26:40,195:INFO:certbot._internal.plugins.webroot:Using the webroot path /var/www/certbot for all unmatched domains.
+2021-02-05 12:26:40,196:DEBUG:certbot._internal.plugins.webroot:Creating root challenges validation dir at /var/www/certbot/.well-known/acme-challenge
+2021-02-05 12:26:40,197:DEBUG:certbot._internal.plugins.webroot:Creating root challenges validation dir at /var/www/certbot/.well-known/acme-challenge
+2021-02-05 12:26:40,209:DEBUG:certbot._internal.plugins.webroot:Attempting to save validation to /var/www/certbot/.well-known/acme-challenge/RIRqS5ZCyrDEEhjbx7OfpLyFJ4o9y5lkl8--0KFE2Bc
+2021-02-05 12:26:40,222:DEBUG:certbot._internal.plugins.webroot:Attempting to save validation to /var/www/certbot/.well-known/acme-challenge/JrRtfC5flcZ1q1Ch5mKIgAsFfImOxvruZBFApie6JfA
+2021-02-05 12:26:40,224:INFO:certbot._internal.auth_handler:Waiting for verification...
+2021-02-05 12:26:40,225:DEBUG:acme.client:JWS payload:
+b'{}'
+2021-02-05 12:26:40,236:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969820/y69PgA:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImh0dHBzOi8vYWNtZS12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvMTExNzY3NjQ5IiwgIm5vbmNlIjogIjAxMDREbm1PMVJKTVZsblV2S2NubExzTGk1bXpVWXRsd2VnMTAtd2tIaWY5Y0lvIiwgInVybCI6ICJodHRwczovL2FjbWUtdjAyLmFwaS5sZXRzZW5jcnlwdC5vcmcvYWNtZS9jaGFsbC12My8xMDYyNTk2OTgyMC95NjlQZ0EifQ",
+  "signature": "Xz_b2bwWCuqOxMGt8LSSD0CS-jrkh0KTVdntoIyw_29grnCDGSyKrLSbU0tGv8SOyUoWr1tX6S6uTDb5jz1FlNCtVLn0NoSm5AASgO1k4yhNsfy6yF-S_9rYoIry5310B4bQVUo-vGdZYY5qsNt-zzvKDmTDwqkyYUAP3Qs626IwFhV9mMcG4uQHeSqcfgNx2gcgF2m88JNqLsIxrw35q4-HKXDs03W7YYsK-byz7Q0z24eQ9FQgw61RrK92BPYUCFcXlf9gXEI8IcSrCLHaDv7Fngnw6eGIhh2Llt-jYAdKP_fyFJZIZYVF5DVsfbMEmjx5egzY3dktdM5SivjSTQ",
+  "payload": "e30"
+}
+2021-02-05 12:26:40,427:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/chall-v3/10625969820/y69PgA HTTP/1.1" 200 186
+2021-02-05 12:26:40,429:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Fri, 05 Feb 2021 12:26:40 GMT
+Content-Type: application/json
+Content-Length: 186
+Connection: keep-alive
+Boulder-Requester: 111767649
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index", <https://acme-v02.api.letsencrypt.org/acme/authz-v3/10625969820>;rel="up"
+Location: https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969820/y69PgA
+Replay-Nonce: 0104YQ14xyD1DO2ZYI3R2uELhRNf9Gr5_EaFN74riLzEQlg
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "type": "http-01",
+  "status": "pending",
+  "url": "https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969820/y69PgA",
+  "token": "RIRqS5ZCyrDEEhjbx7OfpLyFJ4o9y5lkl8--0KFE2Bc"
+}
+2021-02-05 12:26:40,429:DEBUG:acme.client:Storing nonce: 0104YQ14xyD1DO2ZYI3R2uELhRNf9Gr5_EaFN74riLzEQlg
+2021-02-05 12:26:40,431:DEBUG:acme.client:JWS payload:
+b'{}'
+2021-02-05 12:26:40,440:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969822/iGc0qA:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImh0dHBzOi8vYWNtZS12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvMTExNzY3NjQ5IiwgIm5vbmNlIjogIjAxMDRZUTE0eHlEMURPMlpZSTNSMnVFTGhSTmY5R3I1X0VhRk43NHJpTHpFUWxnIiwgInVybCI6ICJodHRwczovL2FjbWUtdjAyLmFwaS5sZXRzZW5jcnlwdC5vcmcvYWNtZS9jaGFsbC12My8xMDYyNTk2OTgyMi9pR2MwcUEifQ",
+  "signature": "KDJiVI1VhvlORnhGo4HMX1V-Xiz6cv_MC9OPdn1i5lQTUiltVjoJvEChSsrHqVvRuDnoWJ-gxkVBAfhLHpApBjDlfYx8GNn7tZO8zAMa6WC3Z-YUwhPE_EF8NWdwMIdqX1-U08AiTo7ad8GouS4ZOZ5lNHmYZOKS3Vj3OX7Xi7TPoyyc_wHz7-sojR9PhaG4CcKqCUmBq6wr7ceiuJdeBZE6DkMR3bHGa1a32taqnSdueDOxPk2DABc-OWh5OspzMw6sHog7k-C0nPz8q2LpIvQ1jtFa4J7FeTBA5-oo1TIEHirBZlJ5mNLI0udnGwjOeozUZVFbOWxQ4EvljPm70g",
+  "payload": "e30"
+}
+2021-02-05 12:26:40,635:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/chall-v3/10625969822/iGc0qA HTTP/1.1" 200 186
+2021-02-05 12:26:40,638:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Fri, 05 Feb 2021 12:26:40 GMT
+Content-Type: application/json
+Content-Length: 186
+Connection: keep-alive
+Boulder-Requester: 111767649
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index", <https://acme-v02.api.letsencrypt.org/acme/authz-v3/10625969822>;rel="up"
+Location: https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969822/iGc0qA
+Replay-Nonce: 01045c2UeGWtU70aEjs_YBf6SUPpfsSta-v-4iMVlyz7a9c
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "type": "http-01",
+  "status": "pending",
+  "url": "https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969822/iGc0qA",
+  "token": "JrRtfC5flcZ1q1Ch5mKIgAsFfImOxvruZBFApie6JfA"
+}
+2021-02-05 12:26:40,639:DEBUG:acme.client:Storing nonce: 01045c2UeGWtU70aEjs_YBf6SUPpfsSta-v-4iMVlyz7a9c
+2021-02-05 12:26:41,641:DEBUG:acme.client:JWS payload:
+b''
+2021-02-05 12:26:41,651:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/authz-v3/10625969820:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImh0dHBzOi8vYWNtZS12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvMTExNzY3NjQ5IiwgIm5vbmNlIjogIjAxMDQ1YzJVZUdXdFU3MGFFanNfWUJmNlNVUHBmc1N0YS12LTRpTVZseXo3YTljIiwgInVybCI6ICJodHRwczovL2FjbWUtdjAyLmFwaS5sZXRzZW5jcnlwdC5vcmcvYWNtZS9hdXRoei12My8xMDYyNTk2OTgyMCJ9",
+  "signature": "JI4ALmd5zSTuRK8nKdol-k7r_efaW32YdWiIUJQAEuDtSeuJXDQzexWTSgOAkJeo0fyMVTnqpisRATG5yor16rbamQ7N3OxdNrmPd-PljO4rB4RG3Y87d1i_sEO_yS6LifI9AY89oitsxznColti0_Umul-ZsmfpJNtER5jJ2-5vcRsK18sIjm8YiSVG7jpvAz60epnEPDOuN_dF_rPipyLPXaeDSKoWI8YQiqR6fdOF20GHM9nPyr8zn8nB7xAM2_dFsJaXBAYF0Rx1HKqY1mbvgMZyu5XB5fQ5JpX2SWwzMjr5riwBYCQVc3V04HhZDdjEVUtNIQhlWYVeTJL4Yg",
+  "payload": ""
+}
+2021-02-05 12:26:41,849:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/authz-v3/10625969820 HTTP/1.1" 200 1909
+2021-02-05 12:26:41,852:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Fri, 05 Feb 2021 12:26:41 GMT
+Content-Type: application/json
+Content-Length: 1909
+Connection: keep-alive
+Boulder-Requester: 111767649
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index"
+Replay-Nonce: 0103fVOwxkeN94g01Pg7T51E8R4xgyhaI1Wpp-s4Q0nTAlc
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "identifier": {
+    "type": "dns",
+    "value": "domain.com"
+  },
+  "status": "invalid",
+  "expires": "2021-02-12T12:26:39Z",
+  "challenges": [
+    {
+      "type": "http-01",
+      "status": "invalid",
+      "error": {
+        "type": "urn:ietf:params:acme:error:unauthorized",
+        "detail": "Invalid response from https://www.domain.com/? [18.221.195.49]: \"\u003c!DOCTYPE html\u003e\u003chtml lang=\\\"en\\\"\u003e\u003chead\u003e\u003clink rel=\\\"icon\\\" type=\\\"image/x-icon\\\" href=\\\"/favicon.ico\\\"/\u003e\u003cscript\u003ewindow.V = window.V || {}\"",
+        "status": 403
+      },
+      "url": "https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969820/y69PgA",
+      "token": "RIRqS5ZCyrDEEhjbx7OfpLyFJ4o9y5lkl8--0KFE2Bc",
+      "validationRecord": [
+        {
+          "url": "http://domain.com/.well-known/acme-challenge/RIRqS5ZCyrDEEhjbx7OfpLyFJ4o9y5lkl8--0KFE2Bc",
+          "hostname": "domain.com",
+          "port": "80",
+          "addressesResolved": [
+            "13.57.130.190"
+          ],
+          "addressUsed": "13.57.130.190"
+        },
+        {
+          "url": "https://www.domain.com/.well-known/acme-challenge/RIRqS5ZCyrDEEhjbx7OfpLyFJ4o9y5lkl8--0KFE2Bc",
+          "hostname": "www.domain.com",
+          "port": "443",
+          "addressesResolved": [
+            "13.57.130.190"
+          ],
+          "addressUsed": "13.57.130.190"
+        },
+        {
+          "url": "http://www.domain.com/?",
+          "hostname": "www.domain.com",
+          "port": "80",
+          "addressesResolved": [
+            "13.57.130.190"
+          ],
+          "addressUsed": "13.57.130.190"
+        },
+        {
+          "url": "https://www.domain.com/?",
+          "hostname": "www.domain.com",
+          "port": "443",
+          "addressesResolved": [
+            "18.221.195.49"
+          ],
+          "addressUsed": "18.221.195.49"
+        }
+      ]
+    }
+  ]
+}
+2021-02-05 12:26:41,853:DEBUG:acme.client:Storing nonce: 0103fVOwxkeN94g01Pg7T51E8R4xgyhaI1Wpp-s4Q0nTAlc
+2021-02-05 12:26:41,855:DEBUG:acme.client:JWS payload:
+b''
+2021-02-05 12:26:41,865:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/authz-v3/10625969822:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImh0dHBzOi8vYWNtZS12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvMTExNzY3NjQ5IiwgIm5vbmNlIjogIjAxMDNmVk93eGtlTjk0ZzAxUGc3VDUxRThSNHhneWhhSTFXcHAtczRRMG5UQWxjIiwgInVybCI6ICJodHRwczovL2FjbWUtdjAyLmFwaS5sZXRzZW5jcnlwdC5vcmcvYWNtZS9hdXRoei12My8xMDYyNTk2OTgyMiJ9",
+  "signature": "hfjmc9Y8dR-kxRDXIqk9FWXBMvv6dplkZ_6QpmImVGTI0cQBh4RCJ_3A_8XvPqwLZmPOEJoPMEgzPVr787wlhQyXaSH5Fkjv4k-ucAID3awQMXog76emARbmECZZdo-45fAyxRiOpWggf8lzYhY4AgSzjzXcAIhfhwtnejtZxRfxkUkFdSsPE7YtCflGhZn2s881XDI1wp89poHpgpytNfqlHlt7OQLoQyYLbOpVrRJ9jnnGImtZ5VgGz3B_kHYA9Zfi3X9e4ap3RmzQnIElCo_nw-fEETnTiI1EtiAYhfC-JWu8NOJYSdE3Ax56K39I-IXID9eqCts7PknW7S0QXQ",
+  "payload": ""
+}
+2021-02-05 12:26:42,086:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/authz-v3/10625969822 HTTP/1.1" 200 1921
+2021-02-05 12:26:42,091:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Fri, 05 Feb 2021 12:26:41 GMT
+Content-Type: application/json
+Content-Length: 1921
+Connection: keep-alive
+Boulder-Requester: 111767649
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index"
+Replay-Nonce: 0104KIjkV05BDlvjJkzcLaLd8t-n3IXI9-k-8wkBViF6hLA
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "identifier": {
+    "type": "dns",
+    "value": "www.domain.com"
+  },
+  "status": "invalid",
+  "expires": "2021-02-12T12:26:39Z",
+  "challenges": [
+    {
+      "type": "http-01",
+      "status": "invalid",
+      "error": {
+        "type": "urn:ietf:params:acme:error:unauthorized",
+        "detail": "Invalid response from https://www.domain.com/? [13.57.130.190]: \"\u003c!DOCTYPE html\u003e\u003chtml lang=\\\"en\\\"\u003e\u003chead\u003e\u003clink rel=\\\"icon\\\" type=\\\"image/x-icon\\\" href=\\\"/favicon.ico\\\"/\u003e\u003cscript\u003ewindow.V = window.V || {}\"",
+        "status": 403
+      },
+      "url": "https://acme-v02.api.letsencrypt.org/acme/chall-v3/10625969822/iGc0qA",
+      "token": "JrRtfC5flcZ1q1Ch5mKIgAsFfImOxvruZBFApie6JfA",
+      "validationRecord": [
+        {
+          "url": "http://www.domain.com/.well-known/acme-challenge/JrRtfC5flcZ1q1Ch5mKIgAsFfImOxvruZBFApie6JfA",
+          "hostname": "www.domain.com",
+          "port": "80",
+          "addressesResolved": [
+            "18.221.195.49"
+          ],
+          "addressUsed": "18.221.195.49"
+        },
+        {
+          "url": "https://www.domain.com/.well-known/acme-challenge/JrRtfC5flcZ1q1Ch5mKIgAsFfImOxvruZBFApie6JfA",
+          "hostname": "www.domain.com",
+          "port": "443",
+          "addressesResolved": [
+            "18.221.195.49"
+          ],
+          "addressUsed": "18.221.195.49"
+        },
+        {
+          "url": "http://www.domain.com/?",
+          "hostname": "www.domain.com",
+          "port": "80",
+          "addressesResolved": [
+            "18.221.195.49"
+          ],
+          "addressUsed": "18.221.195.49"
+        },
+        {
+          "url": "https://www.domain.com/?",
+          "hostname": "www.domain.com",
+          "port": "443",
+          "addressesResolved": [
+            "13.57.130.190"
+          ],
+          "addressUsed": "13.57.130.190"
+        }
+      ]
+    }
+  ]
+}
+2021-02-05 12:26:42,092:DEBUG:acme.client:Storing nonce: 0104KIjkV05BDlvjJkzcLaLd8t-n3IXI9-k-8wkBViF6hLA
+2021-02-05 12:26:42,101:WARNING:certbot._internal.auth_handler:Challenge failed for domain domain.com
+2021-02-05 12:26:42,102:WARNING:certbot._internal.auth_handler:Challenge failed for domain www.domain.com
+2021-02-05 12:26:42,102:INFO:certbot._internal.auth_handler:http-01 challenge for domain.com
+2021-02-05 12:26:42,103:INFO:certbot._internal.auth_handler:http-01 challenge for www.domain.com
+2021-02-05 12:26:42,104:DEBUG:certbot._internal.reporter:Reporting to user: The following errors were reported by the server:
+
+Domain: domain.com
+Type:   unauthorized
+Detail: Invalid response from https://www.domain.com/? [18.221.195.49]: "<!DOCTYPE html><html lang=\"en\"><head><link rel=\"icon\" type=\"image/x-icon\" href=\"/favicon.ico\"/><script>window.V = window.V || {}"
+
+Domain: www.domain.com
+Type:   unauthorized
+Detail: Invalid response from https://www.domain.com/? [13.57.130.190]: "<!DOCTYPE html><html lang=\"en\"><head><link rel=\"icon\" type=\"image/x-icon\" href=\"/favicon.ico\"/><script>window.V = window.V || {}"
+
+To fix these errors, please make sure that your domain name was entered correctly and the DNS A/AAAA record(s) for that domain contain(s) the right IP address.
+2021-02-05 12:26:42,105:DEBUG:certbot._internal.error_handler:Encountered exception:
+Traceback (most recent call last):
+  File "/opt/certbot/src/certbot/certbot/_internal/auth_handler.py", line 91, in handle_authorizations
+    self._poll_authorizations(authzrs, max_retries, best_effort)
+  File "/opt/certbot/src/certbot/certbot/_internal/auth_handler.py", line 180, in _poll_authorizations
+    raise errors.AuthorizationError('Some challenges have failed.')
+certbot.errors.AuthorizationError: Some challenges have failed.
+
+2021-02-05 12:26:42,106:DEBUG:certbot._internal.error_handler:Calling registered functions
+2021-02-05 12:26:42,106:INFO:certbot._internal.auth_handler:Cleaning up challenges
+2021-02-05 12:26:42,107:DEBUG:certbot._internal.plugins.webroot:Removing /var/www/certbot/.well-known/acme-challenge/RIRqS5ZCyrDEEhjbx7OfpLyFJ4o9y5lkl8--0KFE2Bc
+2021-02-05 12:26:42,108:DEBUG:certbot._internal.plugins.webroot:Removing /var/www/certbot/.well-known/acme-challenge/JrRtfC5flcZ1q1Ch5mKIgAsFfImOxvruZBFApie6JfA
+2021-02-05 12:26:42,109:DEBUG:certbot._internal.plugins.webroot:All challenges cleaned up
+2021-02-05 12:26:42,110:DEBUG:certbot._internal.log:Exiting abnormally:
+Traceback (most recent call last):
+  File "/usr/local/bin/certbot", line 11, in <module>
+    load_entry_point('certbot', 'console_scripts', 'certbot')()
+  File "/opt/certbot/src/certbot/certbot/main.py", line 15, in main
+    return internal_main.main(cli_args)
+  File "/opt/certbot/src/certbot/certbot/_internal/main.py", line 1413, in main
+    return config.func(config, plugins)
+  File "/opt/certbot/src/certbot/certbot/_internal/main.py", line 1293, in certonly
+    lineage = _get_and_save_cert(le_client, config, domains, certname, lineage)
+  File "/opt/certbot/src/certbot/certbot/_internal/main.py", line 134, in _get_and_save_cert
+    lineage = le_client.obtain_and_enroll_certificate(domains, certname)
+  File "/opt/certbot/src/certbot/certbot/_internal/client.py", line 441, in obtain_and_enroll_certificate
+    cert, chain, key, _ = self.obtain_certificate(domains)
+  File "/opt/certbot/src/certbot/certbot/_internal/client.py", line 374, in obtain_certificate
+    orderr = self._get_order_and_authorizations(csr.data, self.config.allow_subset_of_names)
+  File "/opt/certbot/src/certbot/certbot/_internal/client.py", line 421, in _get_order_and_authorizations
+    authzr = self.auth_handler.handle_authorizations(orderr, best_effort)
+  File "/opt/certbot/src/certbot/certbot/_internal/auth_handler.py", line 91, in handle_authorizations
+    self._poll_authorizations(authzrs, max_retries, best_effort)
+  File "/opt/certbot/src/certbot/certbot/_internal/auth_handler.py", line 180, in _poll_authorizations
+    raise errors.AuthorizationError('Some challenges have failed.')
+certbot.errors.AuthorizationError: Some challenges have failed.
+2021-02-05 12:26:42,115:ERROR:certbot._internal.log:Some challenges have failed.
